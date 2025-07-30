@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nurse Dosage App</title>
+  <style>
+    body { font-family: Arial; background: #eef5fc; padding: 20px; color: #333; }
+    header { text-align: center; background: #0077cc; color: white; padding: 20px; border-radius: 10px; }
+    .section { background: white; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    label, input, select, textarea, button { display: block; width: 100%; margin-top: 10px; padding: 10px; border-radius: 5px; }
+    button { background: #0077cc; color: white; border: none; cursor: pointer; }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🩺 Nurse Dosage & Pharmacy App</h1>
+    <p>Dosage | mL Calc | PDF | AI | Pharmacy Login</p>
+  </header>
+
+  <div class="section">
+    <h2>💊 Dosage Calculator</h2>
+    <label>Weight (kg):</label>
+    <input type="number" id="weight">
+    <label>Dosage per kg (mg):</label>
+    <input type="number" id="dosePerKg">
+    <button onclick="calcDose()">Calculate Dose</button>
+    <p id="doseResult"></p>
+  </div>
+
+  <div class="section">
+    <h2>🧪 mL Calculator</h2>
+    <label>Total Dose (mg):</label>
+    <input type="number" id="totalDose">
+    <label>Stock Concentration (mg/mL):</label>
+    <input type="number" id="stockConc">
+    <button onclick="calcML()">Calculate Volume (mL)</button>
+    <p id="mlResult"></p>
+  </div>
+
+  <div class="section">
+    <h2>🤖 AI Assistant</h2>
+    <input type="text" id="aiQuery" placeholder="Ask me about drugs, symptoms, etc.">
+    <button onclick="aiReply()">Ask</button>
+    <p id="aiAnswer"></p>
+  </div>
+
+  <div class="section">
+    <h2>📥 Download Nursing PDFs</h2>
+    <ul>
+      <li><a href="pdfs/dosage-guide.pdf" download>Dosage Guide PDF</a></li>
+      <li><a href="pdfs/ml-calculations.pdf" download>mL Calculations PDF</a></li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🧾 Pharmacy Login</h2>
+    <label>Email:</label>
+    <input type="email" placeholder="example@pharmacy.com">
+    <label>Password:</label>
+    <input type="password" placeholder="••••••••">
+    <button>Sign In</button>
+  </div>
+
+  <script>
+    function calcDose() {
+      let w = parseFloat(document.getElementById("weight").value);
+      let d = parseFloat(document.getElementById("dosePerKg").value);
+      if (w && d) {
+        document.getElementById("doseResult").textContent = "Total Dose: " + (w * d).toFixed(2) + " mg";
+      } else {
+        document.getElementById("doseResult").textContent = "Please enter valid numbers.";
+      }
+    }
+
+    function calcML() {
+      let dose = parseFloat(document.getElementById("totalDose").value);
+      let conc = parseFloat(document.getElementById("stockConc").value);
+      if (dose && conc && conc !== 0) {
+        document.getElementById("mlResult").textContent = "Required Volume: " + (dose / conc).toFixed(2) + " mL";
+      } else {
+        document.getElementById("mlResult").textContent = "Check your inputs.";
+      }
+    }
+
+    function aiReply() {
+      let query = document.getElementById("aiQuery").value.toLowerCase();
+      let answer = "I'm not sure. Try asking about dosage or fluids.";
+
+      if (query.includes("paracetamol")) {
+        answer = "Paracetamol: 10–15 mg/kg every 4–6 hrs. Max 60 mg/kg/day.";
+      } else if (query.includes("iv fluid")) {
+        answer = "IV Fluids: Calculate maintenance + deficit + ongoing losses.";
+      }
+
+      document.getElementById("aiAnswer").textContent = answer;
+    }
+  </script>
+
+</body>
+</html>
